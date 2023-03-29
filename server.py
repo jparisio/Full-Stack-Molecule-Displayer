@@ -1,16 +1,29 @@
 import io;
 import MolDisplay;
+import molsql;
 from http.server import HTTPServer, BaseHTTPRequestHandler;
 
 class MyHandler( BaseHTTPRequestHandler ):
     def do_GET(self):
         if self.path == "/":
+            fp = open("index.html");
+            data = fp.read();
             self.send_response( 200 ); # OK
             self.send_header( "Content-type", "text/html" );
-            self.send_header( "Content-length", len(home_page) );
+            self.send_header( "Content-length", len(data) );
             self.end_headers();
 
-            self.wfile.write( bytes( home_page, "utf-8" ) );
+            self.wfile.write( bytes( data, "utf-8" ) );
+        
+        if self.path == "/index.js":
+            fp = open("." + self.path);
+            data2 = fp.read();
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/javascript" );
+            self.send_header( "Content-length", len(data2) );
+            self.end_headers();
+
+            self.wfile.write( bytes( data2, "utf-8" ) );
 
         else:
             self.send_response( 404 );
