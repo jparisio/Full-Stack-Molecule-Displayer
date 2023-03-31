@@ -53,12 +53,38 @@ $(document).ready(
 	  $("#upload").click(
 		function()
 		{
+			// console.log("enter")
+			const file =  $("#files")[0].files[0];
+			const molName = $("#molName").val();
+			const formData = new FormData();
+
+			formData.append("file",file);
+			formData.append("molName", molName);
+
+			$.ajax({
+				url : "/sdf_upload.html",
+				type : "POST",
+				data : formData,
+				processData: false,
+				contentType: false,
+				success: function(data) {
+					alert('FILE UPLOADED')
+				}
+			}
+		  );
+		}
+	  );
+
+
+
+	  $("#molList").click(
+		function()
+		{
 	  /* ajax post */
-	  $.post("/sdf_upload.html",
+	  $.post("/moleculesList.html",
 		/* pass a JavaScript dictionary */
 		{
-		  molName: $("#molName").val(),
-		  file: $('#sdf_file').prop('files')
+		  molList: $("#molList").val(),
 		//   extra_info: "some stuff here"
 		},
 		function( data, status )

@@ -5,7 +5,8 @@ import urllib;  # code to parse for data
 import io;
 import molsql;
 import MolDisplay;
-import math;
+import cgi;
+
 
 # list of files that we allow the web-server to serve to clients
 # (we don't want to serve any file that the client requests)
@@ -50,25 +51,32 @@ class MyHandler( BaseHTTPRequestHandler ):
     def do_POST(self):
 
         if self.path == "/sdf_upload.html":
-            # code to handle sdf_upload
-             # this is specific to 'multipart/form-data' encoding used by POST
-            content_length = int(self.headers['Content-Length']);
-            body = self.rfile.read(content_length);
+           
+           #file upload
 
-            print( repr( body.decode('utf-8') ) );
+            cgi.parse_header(self.headers['Content-Type'])
+            form = cgi.FieldStorage(
+                fp = self.rfile,
+                headers = self.headers,
+                environ = {'REQUEST_METHOD': 'POST'}
+            )
 
-            # convert POST content into a dictionary
-            postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+            # print(form);
 
-            print( postvars );
+            file_item = form['file']
+            contents = file_item.file.read()
+            molName = form.getvalue("molName");
 
-            molName = postvars['molName'][0];
-            file = postvars['file'][0];
-            # newFile = io.StringIO(file.rfile.read(int(file.headers.get('content-length'))).decode('utf-8'));
-            file = open(postvars['file'][0]);
-            
-            # database.add_molecule(molName, file);
-            
+            bytes_io = io.BytesIO(contents)
+            file = io.TextIOWrapper(bytes_io)
+
+            # print(file);
+            database.add_molecule(molName, file);
+            # print(contents)
+            # print(molName)
+            cursor = database.conn.cursor()
+
+            print(cursor.execute("SELECT * FROM Molecules").fetchall());
 
             message = "sdf file uploaded to database";
 
@@ -124,12 +132,44 @@ class MyHandler( BaseHTTPRequestHandler ):
             print( postvars );
             if(postvars['eNumber'][0].isnumeric()):
                 message = "you must enter a valid element code, ex: H"
+            elif len(postvars['eNumber'][0]) > 1:
+                message = "you must enter a valid element code, ex: H"
             else:
                 database.deleteItem(postvars['eNumber'][0]);
                 message = f"Element {str(postvars['eNumber'][0])} deleted";
 
             dict = database.element_name();
             print(dict);
+
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/plain" );
+            self.send_header( "Content-length", len(message) );
+            self.end_headers();
+
+            self.wfile.write( bytes( message, "utf-8" ) );
+        
+
+        elif self.path == "/moleculesList.html":
+
+            # this is specific to 'multipart/form-data' encoding used by POST
+            content_length = int(self.headers['Content-Length']);
+            body = self.rfile.read(content_length);
+
+            print( repr( body.decode('utf-8') ) );
+
+            # convert POST content into a dictionary
+            postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+
+            # print( postvars );
+
+            cursor = database.conn.cursor()
+
+            mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
+            for i in range (len(mols)):
+                print(mols[i][0]);
+              
+            
+            message = "list displayed"
 
             self.send_response( 200 ); # OK
             self.send_header( "Content-type", "text/plain" );

@@ -6,6 +6,17 @@
   </head>
   </head>
   <body>
+
+    <div>
+      <nav>
+        <li><a href = "upload.html">Insert</a></li>
+        <li><a href = "insert.html">Upload</a></li>
+        <li><a href = "select.html">Select</a></li>
+        <li><a id = "display">Display</a></li>
+      </nav>
+    </div>
+
+
     <h2>Enter values for element</h2>
     <label id="label">Enter name:</label><br>
     <input type="text" id="name"/><br><br>
@@ -24,15 +35,21 @@
     <button id="button"> Enter </button><br><br>
 
     <h2>Delete element</h2>
-    <label for="eNo">Enter Element number to delete</label><br>
+    <label for="eNo">Enter Element to delete</label><br>
     <input type="text" id="eNo" name="eNo"><br><br>
     <button id="delete"> delete </button><br><br>
 
     <h2>Upload a file</h2>
-    <input type="file" id="sdf_file" name="filename"/><br><br>
-    <label>Enter the Molecule name</label><br>
-    <input type="text" id="molName"/><br><br>
-    <button id="upload"> Enter </button>
+      <input type="file" id="files" name="filename"/><br><br>
+      <label>Enter the Molecule name</label><br>
+      <input type="text" id="molName"/><br><br>
+      <button id="upload"> upload </button>
+
+    <h2>List of Molecules</h2>
+    <button id="molList"> Show List</button>
+    <div>
+      
+    </div>
     
   </body>
 </html>

@@ -237,13 +237,13 @@ class Database:
        
 
 
-if __name__ == "__main__":
-    db = Database(reset=True);
-    db.create_tables();
-    db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
-    db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 );
-    db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 );
-    db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 );
+# if __name__ == "__main__":
+#     db = Database(reset=True);
+#     db.create_tables();
+#     db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
+#     db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 );
+#     db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 );
+#     db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 );
     # print(db.checkItem('P'));
 #     fp = open( 'water-3D-structure-CT1000292221.sdf' );
 #     db.add_molecule( 'Water', fp );
