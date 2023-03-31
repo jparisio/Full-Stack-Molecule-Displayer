@@ -165,11 +165,43 @@ class MyHandler( BaseHTTPRequestHandler ):
             cursor = database.conn.cursor()
 
             mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
+            string = ''
             for i in range (len(mols)):
-                print(mols[i][0]);
+                string += str(mols[i][0]) + ' ';
+            print(string)
               
             
-            message = "list displayed"
+            message = string
+
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/plain" );
+            self.send_header( "Content-length", len(message) );
+            self.end_headers();
+
+            self.wfile.write( bytes( message, "utf-8" ) );
+        
+        elif self.path == "/display_sdf.html":
+
+            # this is specific to 'multipart/form-data' encoding used by POST
+            content_length = int(self.headers['Content-Length']);
+            body = self.rfile.read(content_length);
+
+            print( repr( body.decode('utf-8') ) );
+
+            # convert POST content into a dictionary
+            postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+            mol_name = postvars['mol'][0]
+            print(mol_name);
+
+            mol = database.load_mol(mol_name);
+            string = mol.svg();
+            mol.sort();
+            print(string);
+
+            # cursor = database.conn.cursor()
+
+            # mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
+            message = string
 
             self.send_response( 200 ); # OK
             self.send_header( "Content-type", "text/plain" );

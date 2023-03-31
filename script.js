@@ -90,10 +90,47 @@ $(document).ready(
 		function( data, status )
 		{
 		  alert( "Data: " + data + "\nStatus: " + status );
+		//   $("#label").text(data);
+		  const arr = data.split(" ");
+		  for(let i = 0; i < arr.length - 1; i++){
+			var txt = $("<p></p>").text(arr[i]);   // Create with jQuery
+  		  	$("#addHere").append(txt);
+			txt.attr('id', 'mol' + String(i));
+		  }
+		//   var title =   $("<h3 id = 'selectTitle'>Type in Molecule you would like to select</h3>");
+		//   var selector =  $("<input id = 'selector'></input>");
+		//   var selectbutton = $("<button id = 'selectButton'></button>").text("Enter"); 
+		//   $("#addHere").append(title);
+		//   $("#addHere").append(selector);
+		//   $("#addHere").append(selectbutton);
 		}
 	  );
 		}
 	  );
+
+
+
+	  $("#selectButton").click(
+		function()
+		{
+		/* ajax post */
+		$.post("/display_sdf.html",
+			/* pass a JavaScript dictionary */
+			{
+			mol: $("#selector").val(),
+			//   extra_info: "some stuff here"
+			},
+			function( data, status )
+			{
+			alert( "\nStatus: " + status );
+			// var txt = $("<div></div>").svg(data);   // Create with jQuery
+  		  	$("#svgGoesHere").append(data);
+
+			}
+		  );
+		}
+	  );
+
 
 
 
