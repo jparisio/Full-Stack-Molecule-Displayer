@@ -237,29 +237,29 @@ class Database:
        
 
 
-if __name__ == "__main__":
-    db = Database(reset=True);
-    db.create_tables();
-    db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
-    db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 );
-    db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 );
-    db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 );
+# if __name__ == "__main__":
+#     db = Database(reset=True);
+#     db.create_tables();
+#     db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
+#     db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 );
+#     db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 );
+#     db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 );
     # print(db.checkItem('P'));
-    # fp = open( 'water-3D-structure-CT1000292221.sdf' );
-    # db.add_molecule( 'Water', fp );
-    fp = open( 'caffeine-3D-structure-CT1001987571.sdf' );
-    db.add_molecule( 'Caffeine', fp );
+#     fp = open( 'water-3D-structure-CT1000292221.sdf' );
+#     db.add_molecule( 'Water', fp );
+#     fp = open( 'caffeine-3D-structure-CT1001987571.sdf' );
+#     db.add_molecule( 'Caffeine', fp );
     # fp = open( 'CID_31260.sdf' );
     # db.add_molecule( 'Isopentanol', fp );
     # MolDisplay.radius = db.radius();
     # MolDisplay.element_name = db.element_name();
     # MolDisplay.header += db.radial_gradients();
-    for molecule in [ 'Caffeine']:
-        mol = db.load_mol( molecule );
+    # for molecule in [ 'Water', 'Caffeine']:
+    #     mol = db.load_mol( molecule );
         # mol.sort();
-        fp = open( molecule + ".svg", "w" );
-        fp.write( mol.svg() );
-        fp.close();
+        # fp = open( molecule + ".svg", "w" );
+        # fp.write( mol.svg() );
+        # fp.close();
     # display tables
     # print( db.conn.execute( "SELECT * FROM Elements;" ).fetchall() );
     # print( db.conn.execute( "SELECT * FROM Molecules;" ).fetchall() );

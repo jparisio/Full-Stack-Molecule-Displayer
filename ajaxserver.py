@@ -192,10 +192,12 @@ class MyHandler( BaseHTTPRequestHandler ):
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
             mol_name = postvars['mol'][0]
             print(mol_name);
-
+            MolDisplay.radius = database.radius();
+            MolDisplay.element_name = database.element_name();
+            MolDisplay.header += database.radial_gradients();
             mol = database.load_mol(mol_name);
             string = mol.svg();
-            mol.sort();
+            # mol.sort();
             print(string);
 
             # cursor = database.conn.cursor()
