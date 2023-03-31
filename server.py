@@ -2,6 +2,8 @@ import io;
 import MolDisplay;
 import molsql;
 from http.server import HTTPServer, BaseHTTPRequestHandler;
+import urllib;
+
 
 class MyHandler( BaseHTTPRequestHandler ):
     def do_GET(self):
@@ -24,6 +26,16 @@ class MyHandler( BaseHTTPRequestHandler ):
             self.end_headers();
 
             self.wfile.write( bytes( data2, "utf-8" ) );
+        
+        if self.path == "/style.css":
+            fp = open("." + self.path);
+            data3 = fp.read();
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/css" );
+            self.send_header( "Content-length", len(data3) );
+            self.end_headers();
+
+            self.wfile.write( bytes( data3, "utf-8" ) );
 
         else:
             self.send_response( 404 );
@@ -47,16 +59,25 @@ class MyHandler( BaseHTTPRequestHandler ):
             mol.parse(file);
             string = mol.svg();
             # print(string);
-            self.send_header( "Content-type", "image/svg+xml" );
-            self.send_header( "Content-length", len(string) );
-            self.end_headers();
+            # self.send_header( "Content-type", "image/svg+xml" );
+            # self.send_header( "Content-length", len(string) );
+            # self.end_headers();
 
-            self.wfile.write( bytes( string, "utf-8" ) );
+            # self.wfile.write( bytes( string, "utf-8" ) );
+
+        if self.path == "/display":
+            fp = open("display.html");
+            data = fp.read();
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/html" );
+            self.send_header( "Content-length", len(data) );
+            self.end_headers(); 
 
         else:
             self.send_response( 404 );
             self.end_headers();
             self.wfile.write( bytes( "404: not found", "utf-8" ) );
+         
 
 
 
