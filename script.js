@@ -133,6 +133,26 @@ $(document).ready(
 
 
 
+	//   $("#upload_html").click(
+	// 	function()
+	// 	{
+	// 	/* ajax post */
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url: form.attr('action'),
+	// 		data: form.serialize(), // serializes form elements
+	// 		success: function(response) {
+	// 		  // re-writes the entire document
+	// 		  var newDoc = document.open("text/html", "replace");
+	// 		  newDoc.write(response);
+	// 		  newDoc.close();
+	// 		}
+	// 	  });
+	// 	}
+	//   );
+
+
+
 
 
 	}

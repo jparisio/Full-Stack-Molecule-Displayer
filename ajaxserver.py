@@ -10,7 +10,7 @@ import cgi;
 
 # list of files that we allow the web-server to serve to clients
 # (we don't want to serve any file that the client requests)
-public_files = [ '/index.html', '/style.css', '/script.js' ];
+public_files = [ '/index.html', '/style.css', '/script.js', '/select.html', '/upload.html'];
 database = molsql.Database(reset = True);
 database.create_tables();
 database['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
@@ -198,7 +198,7 @@ class MyHandler( BaseHTTPRequestHandler ):
             mol = database.load_mol(mol_name);
             string = mol.svg();
             # mol.sort();
-            print(string);
+            # print(string);
 
             # cursor = database.conn.cursor()
 
