@@ -92,10 +92,10 @@ class MyHandler( BaseHTTPRequestHandler ):
 
             cursor = database.conn.cursor()
 
-            included = database.checkItem2(str(molName));
+            included = database.checkItem2(str(molName.strip()));
 
             if(included == False):
-                database.add_molecule(molName, file);
+                database.add_molecule(molName.strip(), file);
                 message = "sdf file uploaded to database";
             else:
                 message = "Molecule already exists, upload did not occur"
@@ -222,18 +222,27 @@ class MyHandler( BaseHTTPRequestHandler ):
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
             mol_name = postvars['mol'][0]
             print(mol_name);
-            MolDisplay.radius = database.radius();
-            MolDisplay.element_name = database.element_name();
-            MolDisplay.header += database.radial_gradients();
-            mol = database.load_mol(mol_name);
-            string = mol.svg();
-            # mol.sort();
-            print(string);
 
-            # cursor = database.conn.cursor()
+            cursor = database.conn.cursor();
 
-            # mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
-            message = string
+            included = database.checkItem2(str(mol_name.strip()));
+
+            if(included == True):   
+                MolDisplay.radius = database.radius();
+                MolDisplay.element_name = database.element_name();
+                MolDisplay.header += database.radial_gradients();
+                mol = database.load_mol(mol_name);
+                string = mol.svg();
+                # mol.sort();
+                print(string);
+
+                # cursor = database.conn.cursor()
+
+                # mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
+                message = string
+            else:
+                message = "Molecule doesnt exist"
+
 
             self.send_response( 200 ); # OK
             self.send_header( "Content-type", "text/plain" );

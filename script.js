@@ -122,12 +122,16 @@ $(document).ready(
 			},
 			function( data, status )
 			{
-			alert( "\nStatus: " + status );
+			if(data == "Molecule doesnt exist"){
+				alert(data);
+			} else {
+			alert(status + ", scroll to see molecule")
 			// var txt = $("<div></div>").svg(data);   // Create with jQuery
   		  	$("#svgGoesHere").append(data);
 			var txt = $("<button></button>").text("rotate");   // Create with jQuery
   		  	$("#svgGoesHere").append(txt);
 			txt.attr("id", "rotate");
+			}
 
 			}
 		  );
