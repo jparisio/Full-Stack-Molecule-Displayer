@@ -71,4 +71,15 @@ void compute_coords( bond *bond );
 int bond_comp( const void *a, const void *b );
 
 
+typedef struct rotations
+{
+  molecule *x[72];
+  molecule *y[72];
+  molecule *z[72];
+} rotations;
+
+rotations *spin( molecule *mol );
+void rotationsfree( rotations *rotations );
+
+
 #endif

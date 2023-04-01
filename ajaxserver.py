@@ -10,7 +10,7 @@ import cgi;
 
 # list of files that we allow the web-server to serve to clients
 # (we don't want to serve any file that the client requests)
-public_files = [ '/index.html', '/style.css', '/script.js', '/select.html', '/upload.html'];
+public_files = ['/style.css', '/script.js', '/select.html', '/upload.html'];
 database = molsql.Database(reset = True);
 database.create_tables();
 database['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
@@ -27,6 +27,25 @@ class MyHandler( BaseHTTPRequestHandler ):
             self.send_header( "Content-type", "text/html" );
 
             fp = open( self.path[1:] ); 
+            # [1:] to remove leading / so that file is found in current dir
+
+            # load the specified file
+            page = fp.read();
+            fp.close();
+
+            # create and send headers
+            self.send_header( "Content-length", len(page) );
+            self.end_headers();
+
+            # send the contents
+            self.wfile.write( bytes( page, "utf-8" ) );
+        
+        elif self.path == "/":   # make sure it's a valid file
+            self.path += "index.html"
+            self.send_response( 200 );  # OK
+            self.send_header( "Content-type", "text/html" );
+
+            fp = open( self.path[1:]); 
             # [1:] to remove leading / so that file is found in current dir
 
             # load the specified file

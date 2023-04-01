@@ -125,6 +125,9 @@ $(document).ready(
 			alert( "\nStatus: " + status );
 			// var txt = $("<div></div>").svg(data);   // Create with jQuery
   		  	$("#svgGoesHere").append(data);
+			var txt = $("<button></button>").text("rotate");   // Create with jQuery
+  		  	$("#svgGoesHere").append(txt);
+			txt.attr("id", "rotate");
 
 			}
 		  );
