@@ -88,16 +88,27 @@ class MyHandler( BaseHTTPRequestHandler ):
 
             bytes_io = io.BytesIO(contents)
             file = io.TextIOWrapper(bytes_io)
+            # print(file)
+
+            cursor = database.conn.cursor()
+
+            included = database.checkItem2(str(molName));
+
+            if(included == False):
+                database.add_molecule(molName, file);
+                message = "sdf file uploaded to database";
+            else:
+                message = "Molecule already exists, upload did not occur"
 
             # print(file);
-            database.add_molecule(molName, file);
             # print(contents)
             # print(molName)
-            cursor = database.conn.cursor()
+            # cursor = database.conn.cursor()
+
 
             print(cursor.execute("SELECT * FROM Molecules").fetchall());
 
-            message = "sdf file uploaded to database";
+            # message = "sdf file uploaded to database";
 
             self.send_response( 200 ); # OK
             self.send_header( "Content-type", "text/plain" );
@@ -217,7 +228,7 @@ class MyHandler( BaseHTTPRequestHandler ):
             mol = database.load_mol(mol_name);
             string = mol.svg();
             # mol.sort();
-            # print(string);
+            print(string);
 
             # cursor = database.conn.cursor()
 

@@ -88,6 +88,27 @@ class Database:
           return True;
        else:
           return False;
+
+
+    def checkItem2( self, molName):
+        cursor = self.conn.cursor()
+        query =  """SELECT 
+                    NAME
+                    FROM Molecules
+                    WHERE NAME = ( ? );""" ;
+        params = (molName,);
+        print(molName);
+        cursor.execute(query, params);
+        name = cursor.fetchone();
+        if(name is None):
+            return False;
+                
+        if(name[0] == molName):
+            return True;
+        else:
+            return False;
+
+
     
     
     

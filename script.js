@@ -68,7 +68,7 @@ $(document).ready(
 				processData: false,
 				contentType: false,
 				success: function(data) {
-					alert('FILE UPLOADED')
+					alert(data)
 				}
 			}
 		  );
