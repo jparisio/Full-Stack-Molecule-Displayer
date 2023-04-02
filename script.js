@@ -89,7 +89,7 @@ $(document).ready(
 		},
 		function( data, status )
 		{
-		  alert( "Data: " + data + "\nStatus: " + status );
+		//   alert( "Data: " + data + "\nStatus: " + status );
 		//   $("#label").text(data);
 		  const arr = data.split(" ");
 		  for(let i = 0; i < arr.length - 1; i++){
@@ -128,13 +128,55 @@ $(document).ready(
 			alert(status + ", scroll to see molecule")
 			// var txt = $("<div></div>").svg(data);   // Create with jQuery
   		  	$("#svgGoesHere").append(data);
-			var txt = $("<button></button>").text("rotate");   // Create with jQuery
-  		  	$("#svgGoesHere").append(txt);
-			txt.attr("id", "rotate");
+			// $("#svgGoesHere").text(data);
+			// $("#svgGoesHere").hide();
+			var txt = $("<button></button>").text("rotate");
+			var txt2 = $("<label></label>").text("		insert x, y and z integer rotation value");
+			var input1 = $("<input></input>");   
+			var input2 = $("<input></input>");  
+			var input3 = $("<input></input>");    // Create with jQuery
+			$("#rotate").prepend(txt2);
+  		  	$("#rotate").prepend(txt);
+			$("#rotateFields").append(input1);
+			$("#rotateFields").append(input2);
+			$("#rotateFields").append(input3);
+			input1.attr("id", "r1");
+			input2.attr("id", "r2");
+			input3.attr("id", "r3");
 			}
 
 			}
 		  );
+		}
+	  );
+
+
+
+
+	  $("#rotate").click(
+		function()
+		{
+	  /* ajax post */
+	  $.post("/rotate.html",
+		/* pass a JavaScript dictionary */
+		{
+		  svg_image: $("#selector").val(),
+		  r1: $("#r1").val(),
+		  r2: $("#r2").val(),
+		  r3: $("#r3").val(),
+		//   extra_info: "some stuff here"
+		},
+		function( data, status )
+		{
+		  alert("rotated");
+		  	$("#svgGoesHere").remove();
+			var txt = $("<label></label>");   // Create with jQuery
+  		  	$("#svgGoesHere2").after(txt);
+			txt.attr("id","svgGoesHere");
+		  	$("#svgGoesHere").append(data);
+		}
+		
+	  );
 		}
 	  );
 

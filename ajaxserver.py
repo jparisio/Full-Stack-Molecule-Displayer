@@ -6,6 +6,7 @@ import io;
 import molsql;
 import MolDisplay;
 import cgi;
+import molecule;
 
 
 # list of files that we allow the web-server to serve to clients
@@ -235,13 +236,48 @@ class MyHandler( BaseHTTPRequestHandler ):
                 string = mol.svg();
                 # mol.sort();
                 print(string);
-
                 # cursor = database.conn.cursor()
 
                 # mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
                 message = string
             else:
                 message = "Molecule doesnt exist"
+
+
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/plain" );
+            self.send_header( "Content-length", len(message) );
+            self.end_headers();
+
+            self.wfile.write( bytes( message, "utf-8" ) );
+
+
+        elif self.path == "/rotate.html":
+
+            # this is specific to 'multipart/form-data' encoding used by POST
+            content_length = int(self.headers['Content-Length']);
+            body = self.rfile.read(content_length);
+
+            print( repr( body.decode('utf-8') ) );
+
+            # convert POST content into a dictionary
+            postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+            rotatedImage = postvars['svg_image'][0];
+            r1 = int(postvars['r1'][0]);
+            r2 = int(postvars['r2'][0]);
+            r3 = int(postvars['r3'][0]);
+
+            print( r1, r2, r3);
+            
+            print(rotatedImage);
+            mol = database.load_mol(rotatedImage);
+            mx = molecule.mx_wrapper(r1, r2, r3);
+            mol.xform( mx.xform_matrix );
+            string = mol.svg();
+            message = string
+
+            # message = "nice"
+
 
 
             self.send_response( 200 ); # OK

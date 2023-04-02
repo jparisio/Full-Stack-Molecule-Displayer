@@ -36,6 +36,12 @@ bond *bonds, **bond_ptrs;
 
 typedef double xform_matrix[3][3];
 
+typedef struct mx_wrapper{
+
+  xform_matrix xform_matrix;
+
+} mx_wrapper;
+
 void atomset( atom *atom, char element[3], double *x, double *y, double *z );
 
 void atomget( atom *atom, char element[3], double *x, double *y, double *z );
@@ -69,17 +75,6 @@ void mol_xform( molecule *molecule, xform_matrix matrix );
 void compute_coords( bond *bond );
 
 int bond_comp( const void *a, const void *b );
-
-
-typedef struct rotations
-{
-  molecule *x[72];
-  molecule *y[72];
-  molecule *z[72];
-} rotations;
-
-rotations *spin( molecule *mol );
-void rotationsfree( rotations *rotations );
 
 
 #endif
