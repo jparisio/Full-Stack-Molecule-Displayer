@@ -131,7 +131,7 @@ $(document).ready(
 			// $("#svgGoesHere").text(data);
 			// $("#svgGoesHere").hide();
 			var txt = $("<button></button>").text("rotate");
-			var txt2 = $("<label></label>").text("		insert x, y and z integer rotation value");
+			var txt2 = $("<label></label>").text("		insert rotation angle into either x (field 1), y (field 2), or z (field 3), other two fields must be zero");
 			var input1 = $("<input></input>");   
 			var input2 = $("<input></input>");  
 			var input3 = $("<input></input>");    // Create with jQuery
