@@ -127,3 +127,8 @@ div label{
     padding-top: 2px;
     font-weight: bold;
 }
+
+p{
+    color: black;
+    background-color: #E2D1F9;
+}

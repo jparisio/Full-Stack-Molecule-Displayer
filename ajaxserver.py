@@ -85,7 +85,7 @@ class MyHandler( BaseHTTPRequestHandler ):
 
             file_item = form['file']
             contents = file_item.file.read()
-            molName = form.getvalue("molName");
+            molName = form.getvalue("molName").upper();
 
             bytes_io = io.BytesIO(contents)
             file = io.TextIOWrapper(bytes_io)
@@ -201,7 +201,7 @@ class MyHandler( BaseHTTPRequestHandler ):
                 mol = database.load_mol(mols[i][0]);
                 atoms = str(mol.atom_no)
                 bonds = str(mol.bond_no)
-                string += str(mols[i][0]) + ' atoms:' + atoms + ' bonds:' + bonds + ' ';
+                string += str(mols[i][0]).upper() + ' atoms:' + atoms + ' bonds:' + bonds + ' ';
             print(string)
               
             
