@@ -1,3 +1,24 @@
+
+* {
+    /* font-size: 100%; */
+    font-family: Arial;
+    color: #E2D1F9
+   }
+
+input{
+    border-radius: 5px;
+    background-color: #E2D1F9;
+    border-color:  none;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 3px;
+}
+
+body{
+    background-color:#317773
+}
+
 nav{
     display: flex;
     align-items: center;
@@ -11,18 +32,19 @@ nav li{
     display: inline block;
     padding: 10px 20px;
     list-style: none;
+    background-color: black;
 }
 
 
 nav li a{
     text-decoration: none;
     font-weight: bold;
-    color: black;
+    /* color: black; */
     
 }
 
 nav li a:hover{
-    color: red;
+    color: #734f96;
     transition: .4s;
 }
 
@@ -31,5 +53,62 @@ nav li a:hover{
     padding-bottom: 30px;
 
     font-size: 30px;
+    font-weight: bold;
+}
+
+button{
+    color: black;
+    border-radius: 20px;
+    padding: 10px;
+    border: none;
+}
+
+button:hover{
+    background-color: #734f96;
+    transition: .2s;
+}
+    
+
+h2{
+    display: inline block;
+    padding: 10px 20px;
+    /* background-color: black; */
+}
+
+h2 span{
+    background-color: black;
+    padding: 10px 20px;
+}
+
+
+h3{
+    display: inline block;
+    padding: 10px 20px;
+    /* background-color: black; */
+}
+
+h3 span{
+    background-color: black;
+    padding: 10px 20px;
+}
+
+#addHere{
+    font-weight: bold;
+    color: black;
+}
+/* 
+label{
+    background-color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    font-weight: bold;
+} */
+
+div label{
+    background-color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
     font-weight: bold;
 }
