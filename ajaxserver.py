@@ -198,7 +198,10 @@ class MyHandler( BaseHTTPRequestHandler ):
             mols = (cursor.execute("SELECT NAME FROM Molecules").fetchall());
             string = ''
             for i in range (len(mols)):
-                string += str(mols[i][0]) + ' ';
+                mol = database.load_mol(mols[i][0]);
+                atoms = str(mol.atom_no)
+                bonds = str(mol.bond_no)
+                string += str(mols[i][0]) + ' atoms:' + atoms + ' bonds:' + bonds + ' ';
             print(string)
               
             
@@ -263,18 +266,28 @@ class MyHandler( BaseHTTPRequestHandler ):
             # convert POST content into a dictionary
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
             rotatedImage = postvars['svg_image'][0];
-            r1 = int(postvars['r1'][0]);
-            r2 = int(postvars['r2'][0]);
-            r3 = int(postvars['r3'][0]);
+            print(postvars['r1'][0])
+            print(postvars['r2'][0])
+            print(postvars['r3'][0])
+            if postvars['r1'][0].isnumeric() == False or postvars['r2'][0].isnumeric() == False or postvars['r3'][0].isnumeric() == False:
+                message = "incorrect values input"
+            elif ((int(postvars['r3'][0]) == 0 and int(postvars['r2'][0]) == 0) or (int(postvars['r1'][0]) == 0 and int(postvars['r2'][0]) == 0) or (int(postvars['r3'][0]) == 0 and int(postvars['r1'][0]) == 0)):
+                print("in func")
+                r1 = int(postvars['r1'][0]);
+                r2 = int(postvars['r2'][0]);
+                r3 = int(postvars['r3'][0]);
 
-            print( r1, r2, r3);
-            
-            print(rotatedImage);
-            mol = database.load_mol(rotatedImage);
-            mx = molecule.mx_wrapper(r1, r2, r3);
-            mol.xform( mx.xform_matrix );
-            string = mol.svg();
-            message = string
+                print( r1, r2, r3);
+                
+                print(rotatedImage);
+                mol = database.load_mol(rotatedImage);
+                mx = molecule.mx_wrapper(r1, r2, r3);
+                mol.xform( mx.xform_matrix );
+                string = mol.svg();
+                message = string
+            else:
+                message = "incorrect values input"
+                
 
             # message = "nice"
 

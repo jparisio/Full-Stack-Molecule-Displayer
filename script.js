@@ -93,7 +93,9 @@ $(document).ready(
 		//   $("#label").text(data);
 		  const arr = data.split(" ");
 		  for(let i = 0; i < arr.length - 1; i++){
-			var txt = $("<p></p>").text(arr[i]);   // Create with jQuery
+			var txt = $("<p></p>").text(arr[i] + " " + arr[i + 1] + " " + arr[i + 2]); 
+			i++;
+			i++;  
   		  	$("#addHere").append(txt);
 			txt.attr('id', 'mol' + String(i));
 		  }
@@ -168,12 +170,16 @@ $(document).ready(
 		},
 		function( data, status )
 		{
-		  alert("rotated");
+			if(data == "incorrect values input"){
+				alert(data)
+			} else{
+		  	alert("rotated");
 		  	$("#svgGoesHere").remove();
 			var txt = $("<label></label>");   // Create with jQuery
   		  	$("#svgGoesHere2").after(txt);
 			txt.attr("id","svgGoesHere");
 		  	$("#svgGoesHere").append(data);
+			}
 		}
 		
 	  );
