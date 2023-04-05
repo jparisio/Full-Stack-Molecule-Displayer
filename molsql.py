@@ -68,7 +68,7 @@ class Database:
     def deleteItem( self, values):
        cursor = self.conn.cursor()
        query =  """DELETE FROM Elements WHERE ELEMENT_CODE = ( ? );""" ;
-       params = (values)
+       params = (values,)
        cursor.execute(query, params)
 
 
@@ -78,7 +78,7 @@ class Database:
                     ELEMENT_CODE
                     FROM Elements
                     WHERE ELEMENT_CODE = ( ? );""" ;
-       params = (values)
+       params = (values,)
        cursor.execute(query, params)
        molID = cursor.fetchone()
        if(molID is None):

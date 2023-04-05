@@ -129,12 +129,25 @@ class MyHandler( BaseHTTPRequestHandler ):
             # convert POST content into a dictionary
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
 
+            cursor = database.conn.cursor();
+            elems = (cursor.execute("SELECT ELEMENT_CODE FROM Elements").fetchall());
+            string = ""
+            for i in range (len(elems)):
+                if (i == len(elems) - 1):
+                    string += str(elems[i][0]) + " "
+                else:
+                    string += str(elems[i][0]) + ", "
+
+            print(string);
+            
+            
+
             print( postvars );
             # db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
             if postvars['number'][0].isnumeric() and postvars['radius'][0].isnumeric() and (postvars['name'][0]).isnumeric() == False and (postvars['code'][0]).isnumeric() == False:
                 if(database.checkItem(postvars['code'][0]) == False):
                   database['Elements'] = (str(postvars['number'][0]), str(postvars['code'][0]), str(postvars['name'][0]), str(postvars['c1'][0]), str(postvars['c2'][0]), str(postvars['c3'][0]), str(postvars['radius'][0]));
-                  message = "Inserted into table";
+                  message = string + ", " + str(postvars['code'][0]);
                 else:
                     message = "element code already exists";
             else:
@@ -163,11 +176,20 @@ class MyHandler( BaseHTTPRequestHandler ):
             print( postvars );
             if(postvars['eNumber'][0].isnumeric()):
                 message = "you must enter a valid element code, ex: H"
-            elif len(postvars['eNumber'][0]) > 1:
+            elif len(postvars['eNumber'][0]) > 3:
                 message = "you must enter a valid element code, ex: H"
             else:
-                database.deleteItem(postvars['eNumber'][0]);
-                message = f"Element {str(postvars['eNumber'][0])} deleted";
+                database.deleteItem(str(postvars['eNumber'][0]));
+                cursor = database.conn.cursor();
+                elems = (cursor.execute("SELECT ELEMENT_CODE FROM Elements").fetchall());
+                string = ""
+                for i in range (len(elems)):
+                    if (i == len(elems) - 1):
+                        string += str(elems[i][0]) + " "
+                    else:
+                        string += str(elems[i][0]) + ", "
+                        
+                message = string;
 
             dict = database.element_name();
             print(dict);
@@ -224,7 +246,7 @@ class MyHandler( BaseHTTPRequestHandler ):
 
             # convert POST content into a dictionary
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
-            mol_name = postvars['mol'][0]
+            mol_name = postvars['mol'][0].upper();
             print(mol_name);
 
             cursor = database.conn.cursor();
@@ -265,6 +287,7 @@ class MyHandler( BaseHTTPRequestHandler ):
 
             # convert POST content into a dictionary
             postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+            print(postvars);
             rotatedImage = postvars['svg_image'][0];
             print(postvars['r1'][0])
             print(postvars['r2'][0])
@@ -280,7 +303,7 @@ class MyHandler( BaseHTTPRequestHandler ):
                 print( r1, r2, r3);
                 
                 print(rotatedImage);
-                mol = database.load_mol(rotatedImage);
+                mol = database.load_mol(rotatedImage.upper());
                 mx = molecule.mx_wrapper(r1, r2, r3);
                 mol.xform( mx.xform_matrix );
                 string = mol.svg();

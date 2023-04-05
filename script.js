@@ -24,7 +24,12 @@ $(document).ready(
 		},
 		function( data, status )
 		{
+		  if(data == "element code already exists" || data == "incorrect values entered"){
 		  alert( "Data: " + data + "\nStatus: " + status );
+		  } else {
+			alert("Inserted into table");
+			$("#elem_list").text("currently in system: " + data);
+		  }
 		}
 	  );
 		}
@@ -43,7 +48,12 @@ $(document).ready(
 		},
 		function( data, status )
 		{
-		  alert( "Data: " + data + "\nStatus: " + status );
+			if(data ==  "you must enter a valid element code, ex: H"){
+					alert( "Data: " + data + "\nStatus: " + status );
+			} else{
+				alert("Deleted from table");
+				$("#elem_list").text("currently in system: " + data);
+			}
 		}
 	  );
 		}
@@ -76,7 +86,7 @@ $(document).ready(
 	  );
 
 
-
+	var clicked = false;
 	  $("#molList").click(
 		function()
 		{
@@ -91,6 +101,7 @@ $(document).ready(
 		{
 		//   alert( "Data: " + data + "\nStatus: " + status );
 		//   $("#label").text(data);
+		if(clicked == false){
 		  const arr = data.split(" ");
 		  for(let i = 0; i < arr.length - 1; i++){
 			var txt = $("<p></p>").text(arr[i] + " " + arr[i + 1] + " " + arr[i + 2]); 
@@ -99,6 +110,10 @@ $(document).ready(
   		  	$("#addHere").append(txt);
 			txt.attr('id', 'mol' + String(i));
 		  }
+		  clicked = true
+		} else{
+			alert("list already displayed")
+		}
 		//   var title =   $("<h3 id = 'selectTitle'>Type in Molecule you would like to select</h3>");
 		//   var selector =  $("<input id = 'selector'></input>");
 		//   var selectbutton = $("<button id = 'selectButton'></button>").text("Enter"); 
@@ -133,7 +148,7 @@ $(document).ready(
 			// $("#svgGoesHere").text(data);
 			// $("#svgGoesHere").hide();
 			var txt = $("<button></button>").text("rotate");
-			var txt2 = $("<label></label>").text("		insert rotation angle into either x (field 1), y (field 2), or z (field 3), other two fields must be zero");
+			var txt2 = $("<br><label></label>").text("		insert rotation angle into either x (field 1), y (field 2), or z (field 3), other two fields must be zero");
 			var input1 = $("<input></input>");   
 			var input2 = $("<input></input>");  
 			var input3 = $("<input></input>");    // Create with jQuery
@@ -186,25 +201,6 @@ $(document).ready(
 		}
 	  );
 
-
-
-	//   $("#upload_html").click(
-	// 	function()
-	// 	{
-	// 	/* ajax post */
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url: form.attr('action'),
-	// 		data: form.serialize(), // serializes form elements
-	// 		success: function(response) {
-	// 		  // re-writes the entire document
-	// 		  var newDoc = document.open("text/html", "replace");
-	// 		  newDoc.write(response);
-	// 		  newDoc.close();
-	// 		}
-	// 	  });
-	// 	}
-	//   );
 
 
 
