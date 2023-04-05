@@ -322,6 +322,37 @@ class MyHandler( BaseHTTPRequestHandler ):
             self.end_headers();
 
             self.wfile.write( bytes( message, "utf-8" ) );
+        
+        elif self.path == "/reload_page.html":
+
+            # this is specific to 'multipart/form-data' encoding used by POST
+            content_length = int(self.headers['Content-Length']);
+            body = self.rfile.read(content_length);
+
+            print( repr( body.decode('utf-8') ) );
+
+            # convert POST content into a dictionary
+            postvars = urllib.parse.parse_qs( body.decode( 'utf-8' ) );
+
+            cursor = database.conn.cursor();
+            elems = (cursor.execute("SELECT ELEMENT_CODE FROM Elements").fetchall());
+            string = ""
+            for i in range (len(elems)):
+                if (i == len(elems) - 1):
+                    string += str(elems[i][0]) + " "
+                else:
+                    string += str(elems[i][0]) + ", "
+
+            print(string)
+
+            message = string;
+
+            self.send_response( 200 ); # OK
+            self.send_header( "Content-type", "text/plain" );
+            self.send_header( "Content-length", len(message) );
+            self.end_headers();
+
+            self.wfile.write( bytes( message, "utf-8" ) );
 
         else:
             self.send_response( 404 );

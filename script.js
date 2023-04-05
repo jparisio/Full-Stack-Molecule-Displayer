@@ -28,7 +28,7 @@ $(document).ready(
 		  alert( "Data: " + data + "\nStatus: " + status );
 		  } else {
 			alert("Inserted into table");
-			$("#elem_list").text("currently in system: " + data);
+			$("#elem_list").text("Elements currently in system: " + data);
 		  }
 		}
 	  );
@@ -52,7 +52,7 @@ $(document).ready(
 					alert( "Data: " + data + "\nStatus: " + status );
 			} else{
 				alert("Deleted from table");
-				$("#elem_list").text("currently in system: " + data);
+				$("#elem_list").text("Elements currently in system: " + data);
 			}
 		}
 	  );
@@ -110,6 +110,9 @@ $(document).ready(
   		  	$("#addHere").append(txt);
 			txt.attr('id', 'mol' + String(i));
 		  }
+		  if(arr[0] == ""){
+			$("#addHere").append("No Molecules");
+		  }
 		  clicked = true
 		} else{
 			alert("list already displayed")
@@ -148,7 +151,7 @@ $(document).ready(
 			// $("#svgGoesHere").text(data);
 			// $("#svgGoesHere").hide();
 			var txt = $("<button></button>").text("rotate");
-			var txt2 = $("<br><label></label>").text("		insert rotation angle into either x (field 1), y (field 2), or z (field 3), other two fields must be zero");
+			var txt2 = $("<br><label style = 'color: black; font-weight: bold;font-size: 20px;'></label>").text("		insert rotation angle into either x (field 1), y (field 2), or z (field 3), other two fields must be zero");
 			var input1 = $("<input></input>");   
 			var input2 = $("<input></input>");  
 			var input3 = $("<input></input>");    // Create with jQuery
@@ -202,7 +205,28 @@ $(document).ready(
 	  );
 
 
-
+	  $("#refresh").click(
+		function()
+		{
+	  /* ajax post */
+	  $.post("/reload_page.html",
+		/* pass a JavaScript dictionary */
+		{
+		//   eNumber: $("#eNo").val(),
+		//   extra_info: "some stuff here"
+		},
+		function( data)
+		{
+			// if(data ==  "you must enter a valid element code, ex: H"){
+			// 		alert( "Data: " + data + "\nStatus: " + status );
+			// } else{
+			// alert("Deleted from table");
+			$("#elem_list").text("Elements currently in system: " + data);
+			// }
+		}
+	  );
+		}
+	  );
 
 
 
